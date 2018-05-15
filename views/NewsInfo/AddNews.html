@@ -1,0 +1,108 @@
+<%
+    var title="新增新闻信息"
+%>
+<%include ../header.html%>
+<link rel="stylesheet" type="text/css" href="../../public/stylesheets/flexbox.css">
+<script type="text/javascript" src="../../public/javascripts/wangEidtor/wangEditor.min.js"></script>
+<div class=" container-fluid">
+    <div class=" page-header">
+        <h2 class=" text-center text-primary">新增新闻信息</h2>
+    </div>
+    <form role="form" class=" form-horizontal" method="post" action="AddNews">
+        <div class=" form-group">
+            <label for="" class=" control-label col-sm-2">新闻标题</label>
+            <div class=" col-sm-7">
+                <input type="text" class=" form-control" name="n_title">
+            </div>
+        </div>
+        <div class=" form-group">
+            <label for="" class=" control-label col-sm-2">新闻类型</label>
+            <div class=" col-sm-7">
+                <select name="n_type" class=" form-control">
+                    <option value="活动介绍">活动介绍</option>
+                    <option value="比赛介绍">比赛介绍</option>
+                    <option value="社团介绍">社团介绍</option>
+                    <option value="学校时事">学校时事</option>
+                </select>
+            </div>
+        </div>
+        <div class=" form-group flex-box-row align-items-center">
+            <label for="" class=" control-label col-sm-2 ">新闻图片</label>
+            <div class=" col-sm-7 flex-box-row align-items-center">
+                <div class="col-sm-2 ">
+                    <input type="hidden" name="n_picPath" id="n_picPath">
+                    <img src="" alt="" id="imgn_picPath" class=" img-thumbnail" style="width:70px;height:70px">
+                </div>
+                <div class=" col-sm-5 ">
+                    <input type="file" class=" form-control" id="imgFile">
+                </div>
+            </div>
+        </div>
+        <div class=" form-group">
+            <label for="" class=" control-label col-sm-2">新闻内容</label>
+            <div class=" col-sm-7">
+                <type type="text" id="n_content"  placeholder="请输入新闻内容" rows="3" />
+            </div>
+        </div>
+        <div class=" form-group">
+            <div class=" col-sm-7 col-sm-offset-2">
+                <button type="submit" onclick="beforeSaveData()" class="btn btn-primary">
+                    <span class=" glyphicon glyphicon-save-file"></span>保存
+                </button>
+                <button type="button" class=" btn btn-danger">
+                    <span class=" glyphicon glyphicon-arrow-left"></span>返回列表
+                </button>
+            </div>
+        </div>
+        <input type="hidden" name="n_content" id="h_n_content">
+    </form>
+</div>
+<script type="text/javascript">
+    $(function(){
+        $("#imgFile").change(function(event){
+            var file=event.currentTarget.files[0];
+            var fileType=file.type;
+            var strRegExp=/(image)\/\w{3,4}/;
+            if(strRegExp.test(fileType)){
+                // var reader=new FileReader();
+                // reader.readAsDataURL(file);
+                // reader.onload=function(e){
+                //     $("#imgn_picPath").attr("src",e.currentTarget.result);
+                //     $("#n_picPath").val(e.currentTarget.result);
+                // }
+                //使用Ajax进行上传测试
+                var formData=new FormData();
+                formData.append("imgFile",file);
+                $.ajax({
+                    type:"post",
+                    url:"/NewsInfo/uploads",
+                    data:formData,
+                    contentType: false,
+                    processData: false,
+                    success:function(res){
+                        $("#imgn_picPath").attr("src",res.data[0]);
+                        $("#n_picPath").val(res.data[0]);
+                    },
+                    error:function(err){
+                        console.log(err);
+                    }
+                })
+            }
+            else{
+                alert("请选择图片文件....");
+            }
+        });
+    });
+</script>
+<script type="text/javascript">
+    var E=window.wangEditor;
+    var editor = new E('#n_content');
+    editor.customConfig.debug=true;
+    editor.customConfig.uploadImgServer="/NewsInfo/uploads";
+    editor.customConfig.uploadFileName="imgFile";
+    editor.create();
+    function beforeSaveData(){
+        $("#h_n_content").val(editor.txt.html());
+    }
+</script>
+<%include ../footer.html%>

@@ -1,0 +1,29 @@
+$bgColor:#39BC82;
+@mixin flex-box-row
+{
+    display: flex;
+    flex-direction: row;
+    width: 100%;   
+}
+@mixin flex-box-column
+{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+@mixin justify-content-center
+{
+    justify-content: center;
+}
+@mixin justify-content-space-around
+{
+    justify-content: space-around;
+}
+@mixin justify-content-space-between
+{
+    justify-content: space-between;
+}
+@mixin align-items-center
+{
+    align-items: center;
+}

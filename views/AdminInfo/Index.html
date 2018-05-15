@@ -1,0 +1,31 @@
+<% 
+    var title="电子校园后台管理登陆";
+%>
+<%include ../header.html%>
+<div class=" container">
+    <div class=" page-header">
+        <h2 class=" text-center text-primary">电子校园后台管理登陆</h2>
+    </div>
+    <form role="form" class=" col-sm-6 col-sm-offset-3" method="get" action="checkLogin">
+        <div class=" form-group">
+            <div class=" input-group">
+                <div class=" input-group-addon">
+                    <span class=" glyphicon glyphicon-user"></span>
+                </div>
+                <input type="text" id="a_id" name="a_id" placeholder="请输入用户名" class=" form-control">
+            </div>
+        </div>
+        <div class=" form-group">
+            <div class=" input-group">
+                <div class=" input-group-addon">
+                    <span class=" glyphicon glyphicon-lock"></span>
+                </div>
+                <input type="password" id="a_pwd" name="a_pwd" placeholder="请输入密码" class=" form-control">
+            </div>
+        </div>
+        <div class=" form-group">
+            <button type="submit" class=" btn btn-primary btn-block">登陆</button>
+        </div>
+    </form>
+</div>
+<%include ../footer.html%>

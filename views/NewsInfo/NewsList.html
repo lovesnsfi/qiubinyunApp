@@ -1,0 +1,38 @@
+<%var title="新闻列表";%>
+<%include ../header.html%>
+<div class=" container">
+    <div class=" page-header">
+        <h2 class=" text-center text-primary">新闻列表</h2>
+    </div>
+    <form id="queryForm" class=" form-inline" role="form">
+        <input type="hidden" name="pageIndex" value="<%=pageIndex%>">
+        <div class=" form-group">
+            <label for="">新闻类型</label>
+            <select class=" form-control" name="n_type">
+                <option value="">-请选择-</option>
+                <option value="活动介绍">活动介绍</option>
+                <option value="比赛介绍">比赛介绍</option>
+                <option value="社团介绍">社团介绍</option>
+                <option value="学校时事">学校时事</option>
+            </select>
+        </div>
+        <div class=" form-group">
+            <button type="button" class=" btn btn-primary" id="btnQuery">
+                <span class=" glyphicon glyphicon-search"></span>查询
+            </button>
+        </div>
+    </form>
+    <div id="tableList">
+        <%include ./partialNewsList.html%>
+    </div> 
+</div>
+<script type="text/javascript">
+    $(function(){
+        $("#btnQuery").click(function(){
+            $.get("query",$("#queryForm").serialize(),function(data){
+                $("#tableList").html(data);
+            });
+        });
+    })
+</script>
+<%include ../footer.html%>
